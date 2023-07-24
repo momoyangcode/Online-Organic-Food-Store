@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/general.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Document</title>
+    <script defer src="momo.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="first-line-header diflex align-center">
+        <a href=""><img src="images/logo.png" class="logo-img" alt="" /></a>
+        <div class="search-area diflex align-center">
+          <img src="images/magnifying-glass.png" class="search-glass" alt="" />
+          <input
+            type="text"
+            placeholder="Search for a product"
+            class="search-form"
+            autocomplete="off"
+          />
+        </div>
+        <ul class="social-media-icons diflex align-center">
+          <li>
+            <a class="social-media-link" href="https://www.facebook.com/">
+              <img
+                class="social-media-img"
+                src="social-media-icon/facebook.png"
+                alt="Facebook Icon"
+              />
+            </a>
+          </li>
+
+          <li>
+            <a class="social-media-link" href="https://www.instagram.com/">
+              <img
+                class="social-media-img"
+                src="social-media-icon/instagram.png"
+                alt="Instagram Icon"
+              />
+            </a>
+          </li>
+
+          <li>
+            <a class="social-media-link" href="https://twitter.com/">
+              <img
+                class="social-media-img"
+                src="social-media-icon/twitter.png"
+                alt="Twitter Icon"
+              />
+            </a>
+          </li>
+
+          <li>
+            <a class="social-media-link" href="https://www.youtube.com/">
+              <img
+                class="social-media-img"
+                src="social-media-icon/youtube.png"
+                alt="Youtube Icon"
+              />
+            </a>
+          </li>
+
+          <li>
+            <a class="social-media-link" href="https://www.tiktok.com/en/">
+              <img
+                class="social-media-img"
+                src="social-media-icon/tik-tok.png"
+                alt="Tiktok Icon"
+              />
+            </a>
+          </li>
+
+          <li>
+            <a
+              class="social-media-link"
+              href="https://www.google.com/intl/hr/gmail/about/"
+            >
+              <img
+                class="social-media-img"
+                src="social-media-icon/email-8-svgrepo-com.svg"
+                alt="Email Icon"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="second-line-header diflex align-center">
+        <ul class="menu diflex align-center">
+          <li class="menu-lists">
+            <a href="#" class="lists-link">Home</a>
+          </li>
+
+          <li class="menu-lists">
+            <a href="#" class="lists-link">Products</a>
+          </li>
+
+          <li class="menu-lists">
+            <a href="#" class="lists-link">Locations</a>
+          </li>
+
+          <li class="menu-lists">
+            <a href="#" class="lists-link">Club</a>
+          </li>
+
+          <li class="menu-lists">
+            <a href="#" class="lists-link">Recipes</a>
+          </li>
+
+          <li class="menu-lists">
+            <a href="#" class="lists-link">About Us</a>
+          </li>
+        </ul>
+
+        <div class="user-section diflex align-center">
+          <div class="user-registion">
+            <a href="" class="signup-login diflex align-center">
+              <img src="images/login.png" class="login-img" alt="" />
+              <span class="login-text">Sign up/Log in</span>
+            </a>
+          </div>
+          <div class="shopping-cart">
+            <a href="" class="cart-link diflex align-center">
+              <div class="cart-header">
+                <img src="images/shopping-cart.png" class="cart-img" alt="" />
+                <div class="cart-counter">
+                  <span class="cart-num">0</span>
+                </div>
+              </div>
+              <span class="your-cart">Your Cart</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class ="slider">
+        <div class="slide slide--1">
+          <img src="banners/banner--1.jpg" alt="Banner">
+        </div>
+
+        <div class="slide slide--2">
+          <img src="banners/banner--2.jpg" alt="Banner">
+        </div>
+
+        <div class="slide slide--3">
+          <img src="banners/banner--3.jpg" alt="Banner">
+        </div>
+
+        <div class="slide slide--4">
+          <img src="banners/banner--4.jpg" alt="Banner">
+        </div>
+
+        <button class="slider__btn slider__btn--left">&larr;</button>
+        <button class="slider__btn slider__btn--right">&rarr;</button>
+        <div class="dots"></div>
+      </div>
+    </header>
+
+    <section class="products">
+      <div class="products__tab-container">
+        <button
+          class="operations__tab operations__tab--1 operations__tab--active"
+          data-tab="1"
+        >
+          Root Vegetables
+        </button>
+        <button class="operations__tab operations__tab--2" data-tab="2">
+          Leafy Greens
+        </button>
+        <button class="operations__tab operations__tab--3" data-tab="3">
+          Other Vegetables
+        </button>
+      </div>
+      <div class="products--container rootvege-products operations__content operations__content--1 operations__content--active"></div>
+      <div class="products--container leafygreens-products operations__content operations__content--2"></div>
+      <div class="products--container othervege-products operations__content operations__content--3"></div>
+
+
+      <!-- Products will be dynamically added here -->
+    </section>
+
+
+    <section class="section-certificate">
+      <p class="certificate-text">Our Certifications</p>
+      <div class="image-wrapper">
+        <img src="images/certification.png" alt="" />
+      </div>
+      <div class="certification-box">
+     <ul class="grid grid-6-cols">
+          <li class="certification">
+            <img src="certification-images/certification-1.jpeg" alt="" />
+          </li>
+          <li class="certification">
+            <img src="certification-images/certification-2.jpeg" alt="" />
+          </li>
+          <li class="certification">
+            <img src="certification-images/certification-3.jpeg" alt="" />
+          </li>
+          <li class="certification">
+            <img src="certification-images/certification-4.jpeg" alt="" />
+          </li>
+          <li class="certification">
+            <img src="certification-images/certification-5.png" alt="" />
+          </li>
+          <li class="certification">
+            <img src="certification-images/certification-6.jpeg" alt="" />
+          </li>
+        </ul>
+        <!-- <button type="button" class="arrow-after"></button> -->
+      </div>
+    </section>
+
+
+      <div class="copyright-box">
+        <p class="copyright-text">&copy; All rights reserved.</p>
+
+        <p>
+          By visiting this website you accept the terms and conditions found in
+          Terms of Use as well as our Policy Privacy.
+        </p>
+      </div>
+    </footer>
+
+    <!-- <script src="momo.js"></script> -->
+  </body>
+</html>
