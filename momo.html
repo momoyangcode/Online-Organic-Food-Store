@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/general.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
     <title>Document</title>
     <script defer src="momo.js"></script>
   </head>
@@ -20,7 +22,7 @@
             type="text"
             placeholder="Search for a product"
             class="search-form"
-            id="searchInput"
+            id="search"
             autocomplete="off"
           />
         </div>
@@ -124,16 +126,29 @@
               <button class="login-text btn--show-modal btn">Log in</button>
             </a>
           </div>
-          <div class="shopping-cart">
-            <a href="" class="cart-link diflex align-center">
+          <div class="shopping-cart ">  
               <div class="cart-header">
                 <img src="images/shopping-cart.png" class="cart-img" alt="" />
                 <div class="cart-counter">
                   <span class="cart-num">0</span>
                 </div>
-              </div>
-              <span class="your-cart">Your Cart</span>
-            </a>
+              </div>            
+          </div>
+          <div class="cart">
+            <h2 class="cart-title">Your Cart</h2>
+            <div class="cart-products"></div>
+
+            <!-- Total -->
+            <div class="total">
+              <div class="total-title">Total</div>
+              <div class="total-price">$0</div>
+            </div>
+
+            <!-- Buy Button -->
+            <button type="button" class="btn-buy">Buy Now</button>
+            <!-- Cart Close -->
+            <i class='bx bx-x' id="close-cart"></i>
+
           </div>
         </div>
       </div>
@@ -162,6 +177,13 @@
     </header>
 
     <section class="products">
+      <div class="title-wrapper">
+        <p class="products-title">Our Products</p>
+        <div class="image-wrapper">
+          <img src="images/certification.png" alt="" class="title-decoration"/>
+        </div>
+      </div>
+
       <div class="products__tab-container">
         <button
           class="operations__tab operations__tab--1 operations__tab--active"
@@ -176,10 +198,11 @@
           Other Vegetables
         </button>
       </div>
-      <div class="products--container rootvege-products operations__content operations__content--1 operations__content--active"></div>
-      <div class="products--container leafygreens-products operations__content operations__content--2"></div>
-      <div class="products--container othervege-products operations__content operations__content--3"></div>
-
+      <div class="product-list-container">
+        <div class="products--container rootvege-products operations__content operations__content--1 operations__content--active"></div>
+        <div class="products--container leafygreens-products operations__content operations__content--2"></div>
+        <div class="products--container othervege-products operations__content operations__content--3"></div>
+      </div>
 
       <!-- Products will be dynamically added here -->
     </section>
@@ -188,7 +211,7 @@
     <section class="section-certificate">
       <p class="certificate-text">Our Certifications</p>
       <div class="image-wrapper">
-        <img src="images/certification.png" alt="" />
+        <img src="images/certification.png" alt="" class="title-decoration"/>
       </div>
       <div class="certification-box">
      <ul class="grid grid-6-cols">
@@ -215,9 +238,81 @@
       </div>
     </section>
 
+    
+    <footer class="footer-box diflex">
+      <div class="footer-links-box gridbox grid-4-cols align-center">
 
-      <div class="copyright-box">
-        <p class="copyright-text">&copy; All rights reserved.</p>
+        <div class="subscribe-box diflex">
+          <h3 class="footer-title">Get in Touch</h3>
+          <p>Don’t miss any updates of our new product!</p>
+          <form action="#" class="s_subscribe_two " method="post" novalidate="true" _lpchecked="1">
+          <input type="text" name="EMAIL" class="email-input" placeholder="Email">
+          <button class="btn-subscribe btn" type="submit">Subscribe</button>
+        </div>
+
+        <div class="footer-link-box diflex">
+          <h1 class="footer-title">Links</h1>
+
+          <div class="footer-links diflex">
+            <a href="">
+              <span class="footer-link-text">Products</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">Club</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">About Us</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">News</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-link-box diflex">
+          <h1 class="footer-title">Resources</h1>
+
+          <div class="footer-links diflex">
+            <a href="">
+              <span class="footer-link-text">Contact</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">Location</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">Help Center</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">FAQ</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-link-box diflex">
+          <h1 class="footer-title">Accounts</h1>
+
+          <div class="footer-links diflex">
+            <a href="">
+              <span class="footer-link-text">Create account</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">Sign in</span>
+            </a>
+            <a href="">
+              <span class="footer-link-text">Policy&terms</span>
+            </a>
+
+            <a href="">
+              <span class="footer-link-text">Press</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-text">
+        <p class="copyright-text">
+          &copy; 2023 Tatila Organic Food. All rights reserved.
+        </p>
 
         <p>
           By visiting this website you accept the terms and conditions found in
@@ -225,6 +320,7 @@
         </p>
       </div>
     </footer>
+
 
     <div class="modal hidden">
       <button class="btn--close-modal">&times;</button>
@@ -245,9 +341,14 @@
         </select>
         <button class="btn" id="btn-login">Log In</button>
       </form>
+
     </div>
+    
     <div class="overlay hidden"></div>
 
-    <!-- <script src="momo.js"></script> -->
+
+
+
+    
   </body>
 </html>

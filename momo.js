@@ -91,6 +91,8 @@ slider();
 /////////////////////////////
 // Modal window
 const modal = document.querySelector(".modal");
+const modalHeader = document.querySelector(".modal__header");
+const modalForm = document.querySelector(".modal__form");
 const overlay = document.querySelector(".overlay");
 const btnCloseModal = document.querySelector(".btn--close-modal");
 const btnOpenModal = document.querySelector(".btn--show-modal");
@@ -107,10 +109,6 @@ const closeModal = function () {
 };
 
 btnOpenModal.addEventListener("click", openModal);
-
-// for (let i = 0; i < btnsOpenModal.length; i++)
-//   btnsOpenModal[i].addEventListener('click', openModal);
-
 btnCloseModal.addEventListener("click", closeModal);
 overlay.addEventListener("click", closeModal);
 
@@ -121,8 +119,6 @@ document.addEventListener("keydown", function (e) {
 });
 
 let url = "https://my-json-server.typicode.com/mrkiley/cwb2023-onlineshop/db";
-
-const productsBox = document.querySelector(".products");
 
 const getData = async (url) => {
   const res = await fetch(url);
@@ -170,6 +166,18 @@ async function setUpProductsCardForData(data) {
     "Leek",
   ];
 
+  // //Search Products
+  // const searchInput = document.querySelector("#search"); // Assuming the input element has an id of "search"
+  // searchInput.addEventListener("input", (e) => {
+  //   const searchValue = e.target.value.trim().toLowerCase();
+  //   const filteredProducts = products.filter((product) =>
+  //     product.name.toLowerCase().includes(searchValue)
+  //   );
+  //   loadMoreCount = 8; // Reset loadMoreCount to show the first 8 filtered products
+  //   loadMoreButton.style.display = "block"; // Reset the "Load More" button visibility
+  //   addingCardToDom(filteredProducts, null, loadMoreCount);
+  // });
+
   //Tabbled Components
 
   tabContainer.addEventListener("click", function (e) {
@@ -201,14 +209,18 @@ async function setUpProductsCardForData(data) {
     }</p>
           </div>
           <div class="shopping--btns">
-            <button class ="btn btn-heart">
-              <img class="heart-img product-like-btn" src="images/favorite.png" alt="heart image">
-            </button>
-
             
+              <i class= "bx bxs-heart product-like-btn btn btn-heart" ></i>
+
               <button class ="btn btn-addtocart cart-container" id="cart-button" >
-              <img class="cart-img product-cart-btn" src="images/shopping-cart.png" alt="shopping cart image">
+              <img class="cart-img product-cart-btn add-cart" src="images/shopping-cart.png" alt="shopping cart image">
               </button>
+
+              <div class="quantity-container display-none">
+                <button class="quantity-button decrease-btn" >&minus;</button>
+                <input type="number" id="quantityInput" value="1" min="0">
+                <button class="quantity-button increase-btn">&plus;</button>
+              </div>
             
           </div>
         </div>`;
@@ -247,8 +259,218 @@ async function setUpProductsCardForData(data) {
   };
 
   categorizeProducts();
-  // console.log(products, users);;
+
+  //like button
+  const btnsLike = document.querySelectorAll(".btn-heart");
+  btnsLike.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      btn.style.color = "#f94458";
+    });
+  });
+
+  //Shopping Cart
+  const cartIcon = document.querySelector(".shopping-cart");
+  const cart = document.querySelector(".cart");
+  const closeCart = document.querySelector("#close-cart");
+
+  //Open Cart
+  cartIcon.onclick = () => {
+    cart.classList.add("active");
+  };
+
+  //Close Cart
+  closeCart.onclick = () => {
+    cart.classList.remove("active");
+  };
+
+  //Cart Working JS
+  if (document.readyState == "loading") {
+    document.addEventListener("DOMContentLoaded", ready);
+  } else {
+    ready();
+  }
+
+  //Making Function
+  function ready() {
+    //Remove Items From Cart
+    const removeCartBtns = document.querySelectorAll(".cart-remove");
+    removeCartBtns.forEach((btn) => {
+      btn.addEventListener("click", removeCartItem);
+    });
+
+    //Quantity change
+    const quantityInputs = document.querySelectorAll(".cart-quantity");
+    quantityInputs.forEach((input) => {
+      input.addEventListener("change", quantityChanged);
+    });
+
+    //Add to cart
+    const addCart = document.querySelectorAll(".btn-addtocart");
+    addCart.forEach((btn) => {
+      btn.addEventListener("click", addCartClicked);
+    });
+
+    //Buy Button Work
+    document
+      .getElementsByClassName("btn-buy")[0]
+      .addEventListener("click", buyButtonClicked);
+  }
+
+  //Buy Button
+  function buyButtonClicked() {
+    alert("Your order is placed");
+    const cartProducts = document.getElementsByClassName("cart-products")[0];
+    while (cartProducts.hasChildNodes()) {
+      cartProducts.removeChild(cartProducts.firstChild);
+    }
+
+    updateTotal();
+  }
+
+  function removeCartItem(e) {
+    const buttonClicked = e.target;
+    buttonClicked.parentElement.remove();
+    updateTotal();
+  }
+
+  //Quantity changes
+  function quantityChanged(e) {
+    const input = e.target;
+    if (isNaN(input.value) || input.value <= 0) {
+      input.value = 1;
+    }
+    updateTotal();
+  }
+
+  //Add To Cart
+  function addCartClicked(e) {
+    const button = e.target;
+    const shopProducts = button.closest(".card");
+    const title = shopProducts.querySelector(".card-title").textContent;
+    const price = shopProducts.querySelector(".card-price").textContent;
+    const productImg = shopProducts.querySelector(".card-img-top").src;
+    addProductToCart(title, price, productImg);
+    updateTotal();
+  }
+
+  function addProductToCart(title, price, productImg) {
+    const cartProducts = document.querySelector(".cart-products");
+    const cartItemNames = document.getElementsByClassName("cart-product-title");
+
+    for (let i = 0; i < cartItemNames.length; i++) {
+      if (cartItemNames[i].textContent == title) {
+        alert("You have already add this item to this cart");
+        return;
+      }
+    }
+
+    const html = `
+    <div class="cart-content">
+      <div class="cart-box">
+        <img src="${productImg}" alt="" class="cart-product-img">
+        <div class="detail-box">
+          <div class="cart-product-title">${title}</div>
+          <div class="cart-price">${price}</div>
+          <input type="number" value="1" class="cart-quantity">
+        </div>
+      <!-- Remove Cart -->
+        <i class='bx bxs-trash-alt cart-remove'></i>
+
+      </div>
+    </div>`;
+    cartProducts.insertAdjacentHTML("afterbegin", html);
+    cartProducts
+      .getElementsByClassName("cart-remove")[0]
+      .addEventListener("click", removeCartItem);
+
+    cartProducts
+      .getElementsByClassName("cart-quantity")[0]
+      .addEventListener("change", quantityChanged);
+
+    function displayCartNum() {
+      const cartItems = document.querySelectorAll(".cart-product-img");
+      const numOfItems = cartItems.length;
+      console.log(numOfItems);
+      document.querySelector(".cart-num").textContent = numOfItems;
+    }
+
+    displayCartNum();
+  }
+
+  //Update Total
+  function updateTotal() {
+    const cartContent = document.getElementsByClassName("cart-content")[0];
+    const cartBoxes = document.querySelectorAll(".cart-box");
+    let total = 0;
+    cartBoxes.forEach((box) => {
+      const priceEl = box.getElementsByClassName("cart-price")[0];
+      const quantityEl = box.getElementsByClassName("cart-quantity")[0];
+      const price = parseFloat(priceEl.innerText.replace("$", ""));
+      const quantity = quantityEl.value;
+      total = total + price * quantity;
+    });
+
+    document.getElementsByClassName("total-price")[0].innerText =
+      "$" + total.toFixed(2);
+  }
 }
+//Shopping cart in the products card
+//   function renderQualityInput() {
+//     const productListContainer = document.querySelector(
+//       ".product-list-container"
+//     );
+
+//     productListContainer.addEventListener("click", function (event) {
+//       if (event.target.closest(".product-cart-btn")) {
+//         const btnCart = event.target.closest("#cart-button");
+//         const card = event.target.closest(".shopping--btns");
+//         const quantityContainer = card.querySelector(".quantity-container");
+//         const btnDecrease = quantityContainer.querySelector(".decrease-btn");
+//         const btnIncrease = quantityContainer.querySelector(".increase-btn");
+//         const quantityInput =
+//           quantityContainer.querySelector("#quantityInput");
+
+//         btnCart.classList.add("display-none");
+//         quantityContainer.classList.remove("display-none");
+//         quantityInput.value = 1;
+
+//         let quantity = +quantityInput.value;
+//         function decreaseQuantity() {
+//           if (quantity > 0) {
+//             quantity--;
+//             if (quantity === 0) {
+//               setTimeout(function () {
+//                 quantityContainer.classList.add("display-none");
+//                 btnCart.classList.remove("display-none");
+//               }, 300);
+//             }
+//           }
+
+//           quantityInput.value = quantity;
+//         }
+
+//         function increaseQuantity() {
+//           quantity++;
+//           quantityInput.value = quantity;
+//         }
+
+//         btnDecrease.addEventListener("click", decreaseQuantity);
+//         btnIncrease.addEventListener("click", increaseQuantity);
+
+//         // function displayProductNum() {
+//         //   const input1 = document.getElementsByClassName("cart-quantity")[0];
+//         //   const input2 = quantityInput;
+//         //   console.log(input1, input2);
+//         // }
+
+//         // displayProductNum();
+//       }
+//     });
+//   }
+
+//   renderQualityInput();
+// }
+// }
 
 async function usersLog(data) {
   const inputFirstName = document.querySelector(".input__first--name");
@@ -269,8 +491,10 @@ async function usersLog(data) {
     );
 
     if (!currentUser) return;
-
-    console.log(currentUser);
+    setTimeout(function () {
+      modalHeader.textContent = "You are logged in! 🎉";
+      modalForm.style.display = "none";
+    }, 600);
 
     closeModal();
     btnText.textContent = `Welcome Back, ${currentUser.givenName}`;
