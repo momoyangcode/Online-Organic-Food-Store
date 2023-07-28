@@ -88,8 +88,8 @@ const slider = function () {
 
 slider();
 
-/////////////////////////////
-// Modal window for users to log in
+/////////////////////////////////////////
+// --Modal window for users to log in--//
 const modal = document.querySelector(".modal");
 const modalHeader = document.querySelector(".modal__header");
 const modalForm = document.querySelector(".modal__form");
@@ -118,7 +118,8 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-//Use asynchronous JavaScript to retrieve data from this database
+///////////////////////////////////////////////////////////////////////
+//--Use asynchronous JavaScript to retrieve data from this database--//
 
 let url = "https://my-json-server.typicode.com/mrkiley/cwb2023-onlineshop/db";
 
@@ -131,7 +132,8 @@ const getData = async (url) => {
   return res;
 };
 
-////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+//--Set up users' page--//
 
 async function setUpUserPage(data) {
   const products = data.products;
@@ -144,6 +146,7 @@ async function setUpUserPage(data) {
   const allTabs = document.querySelectorAll(".operations__tab");
   const tabsContent = document.querySelectorAll(".operations__content");
 
+  //Categorize veges into 3 differnt categories
   const rootVeges = [
     "Carrot",
     "Potato",
@@ -170,8 +173,7 @@ async function setUpUserPage(data) {
     "Leek",
   ];
 
-  //Tabbled Components
-
+  //Tabbed Components
   tabContainer.addEventListener("click", function (e) {
     const clicked = e.target.closest(".operations__tab");
     if (!clicked) return;
@@ -190,6 +192,7 @@ async function setUpUserPage(data) {
       .classList.add("operations__content--active");
   });
 
+  //Create product card for each product
   const productCard = function (product) {
     const html = `
         <div class="card">
@@ -220,6 +223,7 @@ async function setUpUserPage(data) {
     return html;
   };
 
+  //Put products into its own category
   const categorizeProducts = function () {
     //Category--root Veges
     const rootVegesProducts = products.filter((product) =>
@@ -249,10 +253,9 @@ async function setUpUserPage(data) {
       otherVegesContainer.insertAdjacentHTML("afterbegin", productCard(other))
     );
   };
-
   categorizeProducts();
 
-  //like button
+  //add event listener to like button
   const btnsLike = document.querySelectorAll(".btn-heart");
   btnsLike.forEach((btn) => {
     btn.addEventListener("click", function () {
@@ -260,7 +263,7 @@ async function setUpUserPage(data) {
     });
   });
 
-  //Shopping Cart
+  //--Set Shopping Cart in the header--//
   const cartIcon = document.querySelector(".shopping-cart");
   const cart = document.querySelector(".cart");
   const closeCart = document.querySelector("#close-cart");
@@ -282,7 +285,7 @@ async function setUpUserPage(data) {
     ready();
   }
 
-  //Making Function
+  //Making Functional
   function ready() {
     //Remove Items From Cart
     const removeCartBtns = document.querySelectorAll(".cart-remove");
@@ -302,13 +305,13 @@ async function setUpUserPage(data) {
       btn.addEventListener("click", addCartClicked);
     });
 
-    //Buy Button Work
+    //Buy Button add event listener
     document
       .getElementsByClassName("btn-buy")[0]
       .addEventListener("click", buyButtonClicked);
   }
 
-  //Buy Button
+  //Buy Button function
   function buyButtonClicked() {
     alert("Your order is placed");
     const cartProducts = document.getElementsByClassName("cart-products")[0];
@@ -319,6 +322,7 @@ async function setUpUserPage(data) {
     updateTotal();
   }
 
+  //Remove items from cart
   function removeCartItem(e) {
     const buttonClicked = e.target;
     buttonClicked.parentElement.remove();
@@ -334,7 +338,7 @@ async function setUpUserPage(data) {
     updateTotal();
   }
 
-  //Add To Cart
+  //Add Products To Cart
   function addCartClicked(e) {
     const button = e.target;
     const shopProducts = button.closest(".card");
@@ -355,6 +359,8 @@ async function setUpUserPage(data) {
         return;
       }
     }
+
+    // put products into cart dynamically by clicking cart button in product card
 
     const html = `
     <div class="cart-content">
@@ -394,6 +400,7 @@ async function setUpUserPage(data) {
     const cartContent = document.getElementsByClassName("cart-content")[0];
     const cartBoxes = document.querySelectorAll(".cart-box");
     let total = 0;
+    const tax = 0.25;
     cartBoxes.forEach((box) => {
       const priceEl = box.getElementsByClassName("cart-price")[0];
       const quantityEl = box.getElementsByClassName("cart-quantity")[0];
@@ -403,10 +410,10 @@ async function setUpUserPage(data) {
     });
 
     document.getElementsByClassName("total-price")[0].innerText =
-      "$" + total.toFixed(2);
+      "$" + (total * (1 + tax)).toFixed(2);
   }
 
-  //User Log In
+  //--User Log In--//
   function usersLog() {
     const inputFirstName = document.querySelector(".input__first--name");
     const inputLastName = document.querySelector(".input__last--name");
@@ -416,9 +423,9 @@ async function setUpUserPage(data) {
     const users = data.users;
 
     let currentUser;
-
     function userLoggedIn(e) {
       e.preventDefault();
+      //Find Current User
       currentUser = users.find(
         (user) =>
           user.familyName.toLowerCase() === inputLastName.value.toLowerCase() &&
@@ -426,6 +433,7 @@ async function setUpUserPage(data) {
           user.gender === inputGender.value
       );
 
+      //After User Log In
       if (!currentUser) return;
       setTimeout(function () {
         modalHeader.textContent = "You are logged in! 🎉";
@@ -436,6 +444,7 @@ async function setUpUserPage(data) {
       btnText.textContent = `Welcome Back, ${currentUser.givenName}`;
       btnText.style.borderRadius = "5px";
 
+      //Display 5 random veges after a user log in
       const randomNumArr = generateRandomNumbers(veges, 5);
       randomNumArr.forEach((num) => {
         const randomProduct = veges[num];
@@ -449,6 +458,8 @@ async function setUpUserPage(data) {
     }
 
     btnLogIn.addEventListener("click", userLoggedIn);
+
+    //Generate random number (0 - arr.length)
 
     function generateRandomNumbers(arr, length) {
       const numbers = [];
@@ -558,10 +569,3 @@ const setUpPage = async () => {
 };
 
 setUpPage().then();
-
-//What is left
-
-//1) search
-//2) responsive
-//3) prettier
-//4) report

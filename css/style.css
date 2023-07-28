@@ -190,6 +190,11 @@
   border-top: 1.5px solid rgb(157, 156, 156);
 }
 
+.tax {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
 .total-title {
   font-size: 1.8rem;
   font-weight: 600;
