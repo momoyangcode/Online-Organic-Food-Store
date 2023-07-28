@@ -170,18 +170,6 @@ async function setUpUserPage(data) {
     "Leek",
   ];
 
-  // //Search Products
-  // const searchInput = document.querySelector("#search"); // Assuming the input element has an id of "search"
-  // searchInput.addEventListener("input", (e) => {
-  //   const searchValue = e.target.value.trim().toLowerCase();
-  //   const filteredProducts = products.filter((product) =>
-  //     product.name.toLowerCase().includes(searchValue)
-  //   );
-  //   loadMoreCount = 8; // Reset loadMoreCount to show the first 8 filtered products
-  //   loadMoreButton.style.display = "block"; // Reset the "Load More" button visibility
-  //   addingCardToDom(filteredProducts, null, loadMoreCount);
-  // });
-
   //Tabbled Components
 
   tabContainer.addEventListener("click", function (e) {
@@ -475,6 +463,34 @@ async function setUpUserPage(data) {
   }
 
   usersLog();
+
+  //Search Products
+  // function search() {
+  //   const searchbox = document
+  //     .getElementById("search-item")
+  //     .value.toUpperCase();
+
+  //   const items = document.querySelector(".product-list-container");
+  //   const products = document.querySelectorAll(".card");
+  //   const pName = items.querySelectorAll(".card-title");
+
+  //   for (let i = 0; i < pName.length; i++) {
+  //     let match = products[i].closest(".card-title");
+
+  //     if (match) {
+  //       let textValue = match.textContent || match.innerHTML;
+
+  //       if (textValue.toUpperCase().indexOf(searchbox) > -1) {
+  //         products[i].style.display = "";
+  //       } else {
+  //         products[i].style.display = "none";
+  //       }
+  //     }
+  //   }
+  // }
+
+  // const searchForm = document.querySelector(".search-form");
+  // searchForm.addEventListener("keydown", search);
 }
 //Shopping cart in the products card
 //   function renderQualityInput() {

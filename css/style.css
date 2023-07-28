@@ -143,6 +143,14 @@
   row-gap: 0.5rem;
 }
 
+.cart-products {
+  overflow-y: scroll;
+}
+
+.cart-products::-webkit-scrollbar {
+  display: none;
+}
+
 .cart-product-title {
   font-size: 1.4rem;
   text-transform: uppercase;
