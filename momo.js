@@ -89,7 +89,7 @@ const slider = function () {
 slider();
 
 /////////////////////////////
-// Modal window
+// Modal window for users to log in
 const modal = document.querySelector(".modal");
 const modalHeader = document.querySelector(".modal__header");
 const modalForm = document.querySelector(".modal__form");
@@ -118,8 +118,11 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
+//Use asynchronous JavaScript to retrieve data from this database
+
 let url = "https://my-json-server.typicode.com/mrkiley/cwb2023-onlineshop/db";
 
+//A gerneral function to get data from URL using async and await
 const getData = async (url) => {
   const res = await fetch(url);
   if (res.ok) {
@@ -130,8 +133,9 @@ const getData = async (url) => {
 
 ////////////////////////////////////////
 
-async function setUpProductsCardForData(data) {
+async function setUpUserPage(data) {
   const products = data.products;
+  const veges = products.filter((product) => product.category === "vegetable");
   const rootVegesContainer = document.querySelector(".rootvege-products");
   const leafygreensContainer = document.querySelector(".leafygreens-products");
   const otherVegesContainer = document.querySelector(".othervege-products");
@@ -413,6 +417,64 @@ async function setUpProductsCardForData(data) {
     document.getElementsByClassName("total-price")[0].innerText =
       "$" + total.toFixed(2);
   }
+
+  //User Log In
+  function usersLog() {
+    const inputFirstName = document.querySelector(".input__first--name");
+    const inputLastName = document.querySelector(".input__last--name");
+    const inputGender = document.querySelector(".form__input--gender");
+    const btnLogIn = document.getElementById("btn-login");
+    const btnText = document.querySelector(".login-text");
+    const users = data.users;
+
+    let currentUser;
+
+    function userLoggedIn(e) {
+      e.preventDefault();
+      currentUser = users.find(
+        (user) =>
+          user.familyName.toLowerCase() === inputLastName.value.toLowerCase() &&
+          user.givenName.toLowerCase() === inputFirstName.value.toLowerCase() &&
+          user.gender === inputGender.value
+      );
+
+      if (!currentUser) return;
+      setTimeout(function () {
+        modalHeader.textContent = "You are logged in! 🎉";
+        modalForm.style.display = "none";
+      }, 600);
+
+      closeModal();
+      btnText.textContent = `Welcome Back, ${currentUser.givenName}`;
+      btnText.style.borderRadius = "5px";
+
+      const randomNumArr = generateRandomNumbers(veges, 5);
+      randomNumArr.forEach((num) => {
+        const randomProduct = veges[num];
+        addProductToCart(
+          randomProduct.name,
+          randomProduct.price.toFixed(2) + "$",
+          randomProduct.image
+        );
+        updateTotal();
+      });
+    }
+
+    btnLogIn.addEventListener("click", userLoggedIn);
+
+    function generateRandomNumbers(arr, length) {
+      const numbers = [];
+      while (numbers.length < length) {
+        const randomNumber = Math.floor(Math.random() * arr.length); // Generates a random number between 0 and 29
+        if (!numbers.includes(randomNumber)) {
+          numbers.push(randomNumber);
+        }
+      }
+      return numbers;
+    }
+  }
+
+  usersLog();
 }
 //Shopping cart in the products card
 //   function renderQualityInput() {
@@ -472,42 +534,18 @@ async function setUpProductsCardForData(data) {
 // }
 // }
 
-async function usersLog(data) {
-  const inputFirstName = document.querySelector(".input__first--name");
-  const inputLastName = document.querySelector(".input__last--name");
-  const inputGender = document.querySelector(".form__input--gender");
-  const btnLogIn = document.getElementById("btn-login");
-  const btnText = document.querySelector(".login-text");
-
-  const users = data.users;
-
-  btnLogIn.addEventListener("click", function (e) {
-    e.preventDefault();
-    let currentUser = users.find(
-      (user) =>
-        user.familyName.toLowerCase() === inputLastName.value.toLowerCase() &&
-        user.givenName.toLowerCase() === inputFirstName.value.toLowerCase() &&
-        user.gender === inputGender.value
-    );
-
-    if (!currentUser) return;
-    setTimeout(function () {
-      modalHeader.textContent = "You are logged in! 🎉";
-      modalForm.style.display = "none";
-    }, 600);
-
-    closeModal();
-    btnText.textContent = `Welcome Back, ${currentUser.givenName}`;
-    btnText.style.borderRadius = "5px";
-  });
-}
-
 const setUpPage = async () => {
   const data = await getData(url);
-  await setUpProductsCardForData(data);
-  await usersLog(data);
+  await setUpUserPage(data);
 
   return data;
 };
 
 setUpPage().then();
+
+//What is left
+
+//1) search
+//2) responsive
+//3) prettier
+//4) report
