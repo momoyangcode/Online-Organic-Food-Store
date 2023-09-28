@@ -12,7 +12,14 @@ Implementation of JavaScript Fundamental Skills:
 
 3. Cart Functionality: Implementing the shopping cart functionality involved various JavaScript skills. I added event listeners to the cart buttons in every product’s card to handle adding products to the cart in the header, and also users can delete products by clicking the delete button in the cart. Moreover, the total price of items is calculated and displayed in the cart by updating the cart dynamically based on user interactions. I also implemented "like" buttons in product cards to change the colour when clicked.
 
-4. User Login and Like Buttons: The website includes a user login feature where users can log in with their first name, last name, and gender(which we have in the users database). The JavaScript code validates user input and checks for matching user data to display a personalised welcome message upon successful login and also immediately add 5 random products in the user’s cart.
+4. User Login and Like Buttons: The website includes a user login feature where users can log in with their first name, last name, and gender (which we have in the users database that was given to us, unfortunately the users don't have a username). For a test, you can use:
+```
+first name: Ana
+last name:  Maric
+gender:     Female
+```
+
+The JavaScript code validates user input and checks for matching user data to display a personalised welcome message upon successful login and also immediately add 5 random products in the user’s cart.
 
 Challenges Faced and Overcoming::
 
